@@ -1,15 +1,21 @@
 import React, { useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addPost } from "../Store/Slices/PostsSlice";
 const AddPostForm = () => {
   const dispatch = useDispatch();
+  const users = useSelector((Store) => Store.users);
   const titleRef = useRef();
   const contentRef = useRef();
+  const optionRef = useRef();
   const onFormSubmit = (e) => {
     e.preventDefault();
     let title = titleRef.current.value;
     let content = contentRef.current.value;
-    dispatch(addPost(title, content));
+    let userId = optionRef.current.value;
+    // console.log(title, content, option);
+    dispatch(addPost(title, content, userId));
+    titleRef.current.value = "";
+    contentRef.current.value = "";
   };
   return (
     <form
@@ -23,6 +29,19 @@ const AddPostForm = () => {
         name="postTitle"
         ref={titleRef}
       />
+      <select
+        name="users"
+        id=""
+        className="px-2 mt-0 mb-1 w-full"
+        ref={optionRef}
+      >
+        {users.map((user) => (
+          <option key={user.userId} value={user.userId}>
+            {user.name}
+          </option>
+        ))}
+      </select>
+
       <textarea
         className="px-2  mt-0 mb-1 w-full"
         placeholder="Post content goes here"
