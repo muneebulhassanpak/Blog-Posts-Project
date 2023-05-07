@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import User from "./User";
 import PostedTime from "./PostedTime";
+import PostReactions from "./PostReactions";
 const PostsList = () => {
   const Posts = useSelector((Store) => Store.posts);
   return (
@@ -21,6 +22,7 @@ const PostsList = () => {
             <p className="text-slate-100">{item.content}</p>
             <User userId={item.userId} />
             <PostedTime timeStamp={item.date} />
+            <PostReactions post={item} />
           </article>
         ))}
       </div>
